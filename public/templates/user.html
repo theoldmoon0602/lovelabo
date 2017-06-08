@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<p>{{user.username}}({{user.realname}})</p>
+
+<h2>あなたは {{lab.name}} 研究室配属っぽいです</h2>
+
+<h3>第一希望</h3>
+<div>
+    {{first.name}}研究室 -> {{first.rank}}/{{first.nums}}
+</div>
+<h3>第ニ希望</h3>
+<div>
+    {{second.name}}研究室 -> {{second.rank}}/{{second.nums}}
+</div>
+<h3>第三希望</h3>
+<div>
+    {{third.name}}研究室 -> {{third.rank}}/{{third.nums}}
+</div>
+
+<h2>登録情報変更</h2>
+{% with ms = get_flashed_messages(category_filter=['update']) %}
+    {% if ms %}
+    <ul>
+        {% for m in ms %}
+        <li class="alert alert-danger">{{m}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+<form action="{{url_for('update')}}" method="POST">
+    <div class="form-group">
+        <label for="rank">席次</label>
+        <input type="number" class="form-control" max=38 min=1 value={{user.rank}} name="rank" id="rank" required>
+    </div>
+    <div class="form-group">
+        <label for="1st">第一希望</label>
+        <select name="1st" id="1st" class="form-control">
+            {% for v in labs %}
+            {% if v.id == user.first %}
+                <option value="{{v.id}}" selected>{{v.name}}研究室</option>                        
+            {% else %}
+                <option value="{{v.id}}">{{v.name}}研究室</option>            
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="2nd">第二希望</label>
+        <select name="2nd" id="2nd" class="form-control">
+            {% for v in labs %}
+            {% if v.id == user.second %}
+                <option value="{{v.id}}" selected>{{v.name}}研究室</option>                        
+            {% else %}
+                <option value="{{v.id}}">{{v.name}}研究室</option>            
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="3rd">第三希望</label>
+        <select name="3rd" id="3rd" class="form-control">
+            {% for v in labs %}
+            {% if v.id == user.third %}
+                <option value="{{v.id}}" selected>{{v.name}}研究室</option>                        
+            {% else %}
+                <option value="{{v.id}}">{{v.name}}研究室</option>            
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>    
+    <button type="submit" class="btn btn-submit">更新</button>
+</form>
+{% endblock %}

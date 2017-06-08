@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+
+  <!-- Bootstrap -->
+  <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+  <style>
+  ul{
+    list-style: none;
+  }
+  li {
+    padding: 0;
+  }
+  </style>
+</head>
+  <body>
+    <div class="container">
+      <h1><a href="{{url_for('index')}}">研究室配属競争</a></h1>
+      <div>
+        <p>4年後半に待ち受ける熾烈な研究室配属競争に向けて、各研究室の人気を調査し、自分がどの研究室に配属されそうかを予測します。</p>
+      </div>
+      {% with ms = get_flashed_messages(category_filter=['message']) %}
+        {% if ms %}
+        <ul class="messages">
+          {% for m in ms %}
+          <li class="alert alert-success">{{m}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      {% endwith %}
+      {%block content%} {%endblock%}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  </body>
+
+</html>

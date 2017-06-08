@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>ログイン</h2>
+{% with ms = get_flashed_messages(category_filter=['login']) %}
+    {% if ms %}
+    <ul>
+        {% for m in ms %}
+        <li class="alert alert-danger">{{m}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+<form action="{{url_for('login')}}" method="POST">
+    <div class="form-group">
+        <label for="login_username">ユーザ名</label>
+        <input type="text" name="username" class="form-control" id="login_username" placeholder="username" required>
+    </div>
+    <div class="form-group">
+        <label for="login_password">パスワード</label>
+        <input type="password" name="password" class="form-control" id="login_password" placeholder="password" required>
+    </div>
+    <button type="submit" class="btn btn-submit">ログイン</button>
+</form>
+
+<h2>ユーザ登録</h2>
+{% with ms = get_flashed_messages(category_filter=['register']) %}
+    {% if ms %}
+    <ul>
+        {% for m in ms %}
+        <li class="alert alert-danger">{{m}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+<form action="{{url_for('register')}}" method="POST">
+    <div class="form-group">
+        <label for="register_username">ユーザ名</label>
+        <input type="text" name="username" class="form-control" id="register_username" placeholder="username" required>
+    </div>
+    <div class="form-group">
+        <label for="register_password">パスワード</label>
+        <input type="password" name="password" class="form-control" id="register_password" placeholder="password" required>
+    </div>
+    <div class="form-group">
+        <label for="register_realname">名前</label>
+        <input type="text" name="realname" class="form-control" id="register_realname" placeholder="名前" required>        
+    </div>
+    <div class="form-group">
+        <label for="register_rank">席次</label>
+        <input type="number" class="form-control" max=38 min=1 value=1 name="rank" id="register_rank" required>
+    </div>
+    <div class="form-group">
+        <label for="register_1st">第一希望</label>
+        <select name="1st" id="register_1st" class="form-control">
+            {% for v in labs %}
+            <option value="{{v.id}}">{{v.name}}研究室</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="register_2nd">第二希望</label>
+        <select name="2nd" id="register_2nd" class="form-control">
+            {% for v in labs %}
+            <option value="{{v.id}}">{{v.name}}研究室</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="register_3rd">第三希望</label>
+        <select name="3rd" id="register_3rd" class="form-control">
+            {% for v in labs %}
+            <option value="{{v.id}}">{{v.name}}研究室</option>
+            {% endfor %}
+        </select>
+    </div>    
+    <button type="submit" class="btn btn-submit">登録</button>
+</form>
+{% endblock %}
